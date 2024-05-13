@@ -9,5 +9,14 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
-  title = 'northwind';
+  title: string = 'Northwind Market';
+  cartCount: number=0;
+
+  onAddProductToCart(): void{
+    this.cartCount +=1;
+
+    console.log('Ürün sepete eklendi');
+  }
+
+
 }
