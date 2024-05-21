@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { CategoryListItem } from '../../models/category-list-item';
 import { ListGroupComponent, ListGroupItem, ListGroupItems } from '../../../../shared/components/list-group/list-group.component';
 
@@ -15,6 +15,7 @@ import { ListGroupComponent, ListGroupItem, ListGroupItems } from '../../../../s
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CategoryListGroupComponent {
+  @Input() initialSelectedCategoryId?: number | null;
   @ Output() changeSelect = new EventEmitter<number | null>();
 
   categoryList : CategoryListItem[] = [
