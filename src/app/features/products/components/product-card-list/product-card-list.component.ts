@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ProductListItem } from '../../models/product-list-item';
 import { CardComponent } from '../../../../shared/components/card/card.component';
 import { ProductsService } from '../../services/products.service';
@@ -22,7 +22,10 @@ export class ProductCardListComponent implements OnInit {
 
   productList!: ProductListItem[];
 
-  constructor(private productsService: ProductsService) {}
+  constructor(
+    private productsService: ProductsService,
+    private change: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.getProductList();
@@ -34,6 +37,7 @@ export class ProductCardListComponent implements OnInit {
       .pipe(take(1))
       .subscribe((productList) => {
         this.productList = productList;
+        this.change.markForCheck();
       });
   }
   onViewProduct(product: ProductListItem) {
