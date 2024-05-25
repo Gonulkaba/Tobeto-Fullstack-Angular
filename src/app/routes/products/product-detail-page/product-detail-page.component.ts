@@ -2,13 +2,15 @@ import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { BasicLayoutComponent } from '../../../shared/components/basic-layout/basic-layout.component';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ProductDetailsComponent } from '../../../features/products/components/product-details/product-details.component';
 
 @Component({
   selector: 'app-product-detail-page',
   standalone: true,
   imports: [
     CommonModule,
-    BasicLayoutComponent
+    BasicLayoutComponent,
+    ProductDetailsComponent
   ],
   templateUrl: './product-detail-page.component.html',
   styleUrl: './product-detail-page.component.scss',
