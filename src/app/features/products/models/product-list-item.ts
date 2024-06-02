@@ -4,4 +4,5 @@ export interface ProductListItem {
     name: string;
     quantityPerUnit: string;
     unitPrice: number;
+    imageUrl: string;
   }
