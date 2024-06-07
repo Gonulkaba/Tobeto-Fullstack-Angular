@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnChanges,OnInit, Output,SimpleChanges, } from '@angular/core';
 import { ProductListItem } from '../../models/product-list-item';
 import { CardComponent } from '../../../../shared/components/card/card.component';
 import { ProductsService } from '../../services/products.service';
@@ -21,7 +21,7 @@ import { PaginatedList } from '../../../../core/models/paginated-list';
   styleUrl: './product-card-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ProductCardListComponent implements OnInit {
+export class ProductCardListComponent implements OnInit, OnChanges {
   @Input() filterByCategoryId: number | null = null; 
   @Output() viewProduct = new EventEmitter<ProductListItem>();
 
@@ -37,9 +37,20 @@ export class ProductCardListComponent implements OnInit {
     this.getProductList();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (
+      changes['filterByCategoryId'] &&
+      changes['filterByCategoryId'].currentValue !==
+        changes['filterByCategoryId'].previousValue
+    )
+      this.getProductList();
+  }
+
   getProductList(page: number = 1) {
     this.productsService
-    .getList(page, this.pageSize)
+      .getList(page, this.pageSize, {
+        categoryId: this.filterByCategoryId || undefined,
+      })
       .pipe(take(1))
       .subscribe((productList) => {
         this.productList = productList;
