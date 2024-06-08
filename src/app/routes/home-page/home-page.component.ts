@@ -28,7 +28,7 @@ export class HomePageComponent implements OnInit {
   oldUser: boolean = false;
 
   constructor(private router: Router, private route: ActivatedRoute, private change:ChangeDetectorRef) {}
-
+  
   ngOnInit(): void {
     this.getProductFiltersFromRoute();
     this.detectOldUser();
@@ -51,7 +51,9 @@ export class HomePageComponent implements OnInit {
     this.route.queryParams.subscribe((queryParams) => {
       const categoryId = queryParams['categoryId'];
       if (categoryId) this.selectedCategoryId = Number(categoryId);
-    }).unsubscribe();
+      else this.selectedCategoryId = null;
+      this.change.markForCheck();
+    });
   }
 
   onChangeCategorySelect(event: number | null) {
