@@ -5,7 +5,7 @@
       <!-- <input id="nameInput" type="text" class="ms-2" [(ngModel)]="nameInput" /> -->
       
       <!-- ReactiveFormsModule -->
-      <input id="nameInput" type="text" formControlName="name" class="ms-2" />
+      <input id="nameInput" type="text" formControlName="name" class="ms-2" (input)="onFormChange()"/>
       <!-- Two-way binding -->
     </div>
     <div class="mt-3">
@@ -23,6 +23,7 @@
         type="text"
         formControlName="description"
         class="ms-2"
+        (input)="onFormChange()"
       />
     </div>
   

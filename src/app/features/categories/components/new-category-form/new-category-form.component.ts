@@ -8,6 +8,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { NewCategory } from '../../models/new-category';
+import { CanComponentDeactivate } from '../../../../core/guards/form.guard';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-new-category-form',
@@ -21,7 +23,7 @@ import { NewCategory } from '../../models/new-category';
   styleUrl: './new-category-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NewCategoryFormComponent implements OnInit {
+export class NewCategoryFormComponent implements OnInit, CanComponentDeactivate {
   // nameInput: string = '';
   // descriptionInput: string = '';
 
@@ -75,5 +77,20 @@ export class NewCategoryFormComponent implements OnInit {
     }
 
     this.add();
+  }
+
+  formDirty: boolean = false;
+
+  // Formun durumu değiştiğinde bu metod çağrılmalı
+  onFormChange() {
+    this.formDirty = true;
+  }
+
+  // Bu metod, guard tarafından çağrılacak
+  canDeactivate(): Observable<boolean> | Promise<boolean> | boolean {
+    if (this.formDirty) {
+      return confirm('Değişiklikleriniz kaydedilmedi. Sayfadan ayrılmak istediğinize emin misiniz?');
+    }
+    return true;
   }
 }
